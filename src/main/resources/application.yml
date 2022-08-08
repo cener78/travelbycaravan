@@ -1,0 +1,22 @@
+server:
+  error:
+    include-binding-errors: always # her hatayi goster
+    include-stacktrace: never #hatalari uzun uzun gosterme
+    include-message: always #kendi olusturdugumuz hatalari her zaman goster
+  port: 8080
+  servlet:
+    context-path: /travel-by-caravan/api
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/travelbycaravandb
+    username: root
+    password: 2672li
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLMyISAMDialect
+        format_sql: true
+    show-sql: true
