@@ -11,6 +11,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -70,5 +72,13 @@ public class User {
     private Boolean builtIn; // if its value is true, that object will be prevented from being updated.
     // true olursa bazi kullanicilari update edilemez olarak ayarlanacak,
     // ornegin admin kullanicisinin silinmesini engelleyecek
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="user_roles",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+    private Set<Role> roles=new HashSet<>();
+
 
 }
