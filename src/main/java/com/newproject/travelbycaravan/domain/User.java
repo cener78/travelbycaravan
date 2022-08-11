@@ -69,7 +69,7 @@ public class User {
     private String zipCode;
 
     @Column(nullable = false)
-    private Boolean builtIn; // if its value is true, that object will be prevented from being updated.
+    private Boolean builtIn=false; // if its value is true, that object will be prevented from being updated.
     // true olursa bazi kullanicilari update edilemez olarak ayarlanacak,
     // ornegin admin kullanicisinin silinmesini engelleyecek
 
