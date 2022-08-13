@@ -42,9 +42,9 @@ public class User {
     @Column(nullable = false,length = 120)
     private String password;
 
-    @Pattern(regexp = "/(^\\+[0-9]{2}|^\\+[0-9]{2}\\(0\\)|^\\(\\+[0-9]{2}\\)\\(0\\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\\-\\s]{10}$)/",
+    @Pattern(regexp = "^((\\+|00(\\s|\\s?\\-\\s?)?)31(\\s|\\s?\\-\\s?)?(\\(0\\)[\\-\\s]?)?|0)[1-9]((\\s|\\s?\\-\\s?)?[0-9])((\\s|\\s?-\\s?)?[0-9])((\\s|\\s?-\\s?)?[0-9])\\s?[0-9]\\s?[0-9]\\s?[0-9]\\s?[0-9]\\s?[0-9]$",
     message = "Please enter valid phone number")
-    @Size(min=14, max=14)
+    @Size(min=10, max=16)
     @NotNull(message = "Please enter your phone number")
     @Column(nullable = false, length = 14)
     private String phoneNumber;
