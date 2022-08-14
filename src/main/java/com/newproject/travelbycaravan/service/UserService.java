@@ -3,6 +3,7 @@ package com.newproject.travelbycaravan.service;
 import com.newproject.travelbycaravan.domain.Role;
 import com.newproject.travelbycaravan.domain.User;
 import com.newproject.travelbycaravan.domain.enumeration.UserRole;
+import com.newproject.travelbycaravan.dto.UserDTO;
 import com.newproject.travelbycaravan.exception.AuthException;
 import com.newproject.travelbycaravan.exception.BadRequestException;
 import com.newproject.travelbycaravan.exception.ConflictException;
@@ -27,6 +28,21 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final static String USER_NOT_FOUND_MSG="user with id %d not found";
+
+    // DTO data transfer object
+    public UserDTO findById(Long id) throws ResourceNotFoundException{
+        User user=userRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException(String.format(USER_NOT_FOUND_MSG,id)));
+
+        UserDTO userDTO=new UserDTO();
+        userDTO.setRoles(user.getRoles());
+        return new UserDTO(user.getFirstName(),user.getLastName(),
+                user.getPhoneNumber(),user.getEmail(),user.getAddress()
+                ,user.getZipCode(),user.getBuiltIn(),userDTO.getRoles());
+    }
+
+
 
     public void register(User user) throws BadRequestException {
         if(userRepository.existsByEmail(user.getEmail())){
