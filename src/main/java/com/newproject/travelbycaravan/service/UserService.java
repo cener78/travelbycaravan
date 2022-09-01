@@ -73,7 +73,22 @@ public class UserService {
             throw new AuthException("Invalid credentials");
         }
      }
+    public void updateUser(Long id, UserDTO userDao) throws BadRequestException {
 
+        boolean emailExists = userRepository.existsByEmail(userDao.getEmail());
+        Optional<User> userDetails = userRepository.findById(id);
+
+        if (userDetails.get().getBuiltIn()){
+            throw new ResourceNotFoundException("You dont have permission to update user info!");
+        }
+
+        if (emailExists && !userDao.getEmail().equals(userDetails.get().getEmail())){
+            throw new ConflictException("Error: Email is already in use!");
+        }
+
+        userRepository.update(id, userDao.getFirstName(), userDao.getLastName(), userDao.getPhoneNumber(),
+                userDao.getEmail(), userDao.getAddress(), userDao.getZipCode());
+    }
 
 
 

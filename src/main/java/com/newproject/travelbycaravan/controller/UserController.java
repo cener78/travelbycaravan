@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,7 @@ public class UserController {
     public JwtUtils jwtUtils;
 
     @GetMapping("/user")
+    @PreAuthorize("hasRole('CUSTOMER')or hasRole('ADMIN')")
     public ResponseEntity<UserDTO> getUserById(HttpServletRequest request){
         Long id =(Long)request.getAttribute("id");
         UserDTO user=userService.findById(id);
@@ -70,7 +72,16 @@ public class UserController {
         map.put("token",jwt);
         return new ResponseEntity<>(map,HttpStatus.OK);
     }
-
+    @PutMapping("/user")
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Boolean>> updateUser(HttpServletRequest request,
+                                                           @Valid @RequestBody UserDTO userDao) {
+        Long id = (Long) request.getAttribute("id");
+        userService.updateUser(id, userDao);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("success", true);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 
 
 

@@ -1,6 +1,7 @@
 package com.newproject.travelbycaravan.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.newproject.travelbycaravan.domain.Role;
 import com.newproject.travelbycaravan.domain.enumeration.UserRole;
 import lombok.AllArgsConstructor;
@@ -30,8 +31,7 @@ public class UserDTO {
     @NotNull(message = "Please enter your last name")
     private String lastName;
 
-    @Size(min=4, max = 60)
-    @NotNull(message = "Please enter password")
+   @JsonIgnore
     private String password;
 
     @Pattern(regexp = "^((\\+|00(\\s|\\s?\\-\\s?)?)31(\\s|\\s?\\-\\s?)?(\\(0\\)[\\-\\s]?)?|0)[1-9]((\\s|\\s?\\-\\s?)?[0-9])((\\s|\\s?-\\s?)?[0-9])((\\s|\\s?-\\s?)?[0-9])\\s?[0-9]\\s?[0-9]\\s?[0-9]\\s?[0-9]\\s?[0-9]$",
