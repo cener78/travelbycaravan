@@ -15,7 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
@@ -82,6 +81,22 @@ public class UserController {
         map.put("success", true);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+    @PatchMapping("/user/auth")
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
+    public ResponseEntity<Map<String,Boolean>> updatePassword(HttpServletRequest request,
+                                                              @RequestBody Map<String,Object>userMap){
+
+        Long id=(Long) request.getAttribute("id");
+        String newPassword=(String)userMap.get("newPassword");
+        String oldPassword=(String) userMap.get("oldPassword");
+
+        userService.updatePassword(id, newPassword,oldPassword);
+        Map<String, Boolean>map=new HashMap<>();
+        map.put("success",true);
+        return new ResponseEntity<>(map,HttpStatus.OK);
+    }
+
 
 
 

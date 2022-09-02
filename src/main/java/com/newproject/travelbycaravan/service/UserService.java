@@ -91,6 +91,15 @@ public class UserService {
     }
 
 
-
-
+    public void updatePassword(Long id, String newPassword, String oldPassword) throws BadRequestException{
+        Optional<User>user=userRepository.findById(id);
+        if(user.get().getBuiltIn()){
+            throw new BadRequestException("You donot have permission to update password");
+        }
+        if(!BCrypt.hashpw(oldPassword,user.get().getPassword()).equals(user.get().getPassword()))
+            throw new BadRequestException("Password doesnot match");
+        String hashedPassword=passwordEncoder.encode(newPassword);
+        user.get().setPassword(hashedPassword);
+        userRepository.save(user.get());
+    }
 }
