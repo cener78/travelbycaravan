@@ -8,6 +8,7 @@ import com.newproject.travelbycaravan.exception.AuthException;
 import com.newproject.travelbycaravan.exception.BadRequestException;
 import com.newproject.travelbycaravan.exception.ConflictException;
 import com.newproject.travelbycaravan.exception.ResourceNotFoundException;
+import com.newproject.travelbycaravan.projection.ProjectUser;
 import com.newproject.travelbycaravan.repository.RoleRepository;
 import com.newproject.travelbycaravan.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,6 +31,10 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final static String USER_NOT_FOUND_MSG="user with id %d not found";
+
+    public List<ProjectUser> fetchAllUser(){
+        return userRepository.findAllBy();
+    }
 
     // DTO data transfer object
     public UserDTO findById(Long id) throws ResourceNotFoundException{

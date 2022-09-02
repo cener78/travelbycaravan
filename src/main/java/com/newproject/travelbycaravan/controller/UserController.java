@@ -34,6 +34,16 @@ public class UserController {
 
     public JwtUtils jwtUtils;
 
+    @GetMapping("/user/{id}/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserDTO>getUserByIdAdmin(@PathVariable Long id){
+        UserDTO user=userService.findById(id);
+        return  new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
+
+
+
     @GetMapping("/user")
     @PreAuthorize("hasRole('CUSTOMER')or hasRole('ADMIN')")
     public ResponseEntity<UserDTO> getUserById(HttpServletRequest request){
@@ -41,9 +51,6 @@ public class UserController {
         UserDTO user=userService.findById(id);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
-
-
-
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Boolean>>registerUser( @Valid @RequestBody User user){

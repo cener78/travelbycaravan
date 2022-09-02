@@ -1,6 +1,7 @@
 package com.newproject.travelbycaravan.domain;
 
 
+import com.newproject.travelbycaravan.domain.enumeration.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -79,6 +80,21 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
     private Set<Role> roles=new HashSet<>();
+
+    public Set<String>getRole(){
+        Set<String>roles1=new HashSet<>();
+        Role[] role=roles.toArray(new Role[roles.size()]);
+
+        for (int i = 0; i < roles.size(); i++) {
+            if (role[i].getName().equals(UserRole.ROLE_ADMIN))
+                roles1.add("administrator");
+            else
+                roles1.add("customer");
+
+        }
+        return roles1;
+
+    }
 
 
 }
