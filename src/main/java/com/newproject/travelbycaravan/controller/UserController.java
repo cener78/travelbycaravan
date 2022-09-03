@@ -2,6 +2,7 @@ package com.newproject.travelbycaravan.controller;
 
 
 import com.newproject.travelbycaravan.domain.User;
+import com.newproject.travelbycaravan.dto.AdminDTO;
 import com.newproject.travelbycaravan.dto.UserDTO;
 import com.newproject.travelbycaravan.projection.ProjectUser;
 import com.newproject.travelbycaravan.security.jwt.JwtUtils;
@@ -112,6 +113,14 @@ public class UserController {
         return new ResponseEntity<>(map,HttpStatus.OK);
     }
 
+    @PutMapping("/user/{id}/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String,Boolean>> updateUserAuth(@PathVariable Long id,
+                                                              @Valid @RequestBody AdminDTO adminDTO){
+        userService.updateUserAuth(id,adminDTO);
+        Map<String,Boolean>map=new HashMap<>();
+        return new ResponseEntity<>(map,HttpStatus.OK);
+    }
 
 
 
