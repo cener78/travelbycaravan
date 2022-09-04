@@ -118,7 +118,8 @@ public class UserService {
             throw new BadRequestException("You do not have permission to update user info");
         }
         adminDTO.setBuiltIn(false);
-        if (emailExist && !adminDTO.getEmail().equals(userDetails.get().getEmail())) {
+        if (emailExist && !adminDTO.getEmail().equals(userDetails.get().getEmail())) {// email databasede varsa ve yeni girilen ile eskisi esitdegilse
+                                                                                        //yeni girilenle eski girilen esitse sonun yok cunku kullanici degistirmek istememis demektir.
             throw new ConflictException("Error: Email is already in use");
 
         }
@@ -184,4 +185,14 @@ public class UserService {
         return roles;
     }
 
+    public void removeById(Long id) throws ResourceNotFoundException {
+        User user=new User();
+        userRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException(String.format(USER_NOT_FOUND_MSG,id)));
+        if(user.getBuiltIn())
+            throw new BadRequestException("You do not have permission to delete user");
+
+        userRepository.deleteById(id);
+
+    }
 }
