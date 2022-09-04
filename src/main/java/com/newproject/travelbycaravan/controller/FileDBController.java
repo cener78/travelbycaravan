@@ -24,17 +24,18 @@ public class FileDBController {
 
     @PostMapping("/upload")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file")MultipartFile file){
-        try{
-            FileDB fileDB=fileDBService.store(file);
-            Map<String,String>map=new HashMap<>();
+    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            FileDB fileDB = fileDBService.store(file);
+            Map<String, String> map = new HashMap<>();
+            map.put("imageId", fileDB.getId());
             return ResponseEntity.status(HttpStatus.OK).body(map);
-        } catch(IOException e){
-            Map<String, String>map=new HashMap<>();
-            map.put("message","Could not upload the file: " + file.getOriginalFilename()+"!");
 
-            return  ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(map);
+        } catch (Exception e) {
+
+            Map<String, String> map = new HashMap<>();
+            map.put("message", "Could not upload the file: " + file.getOriginalFilename() + "!");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(map);
         }
-
     }
 }
