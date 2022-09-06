@@ -2,17 +2,22 @@ package com.newproject.travelbycaravan.controller;
 
 
 import com.newproject.travelbycaravan.domain.FileDB;
+import com.newproject.travelbycaravan.dto.FileDTO;
 import com.newproject.travelbycaravan.service.FileDBService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/files")
@@ -38,4 +43,32 @@ public class FileDBController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(map);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<byte[]> getFile(@PathVariable String id){
+        FileDB fileDB=fileDBService.getFileById(id);
+
+        //Asagidaki code dosya indirmeye yarayan kalip bir code.
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename="+fileDB.getName()+"").body(fileDB.getData());
+
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<FileDTO>> getAllFile(){
+
+        List<FileDTO>files=fileDBService.getAllFiles().map(dbfile->{
+
+            String fileDownloadUri= ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/files/")
+                    .path(dbfile.getId())
+                    .toUriString();
+
+            return  new FileDTO(dbfile.getName(), fileDownloadUri,dbfile.getType(), dbfile.getData().length);
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(files);
+    }
+
 }
