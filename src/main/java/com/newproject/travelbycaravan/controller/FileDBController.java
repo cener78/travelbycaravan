@@ -7,6 +7,7 @@ import com.newproject.travelbycaravan.service.FileDBService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +56,7 @@ public class FileDBController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<FileDTO>> getAllFile(){
 
         List<FileDTO>files=fileDBService.getAllFiles().map(dbfile->{
@@ -69,6 +71,15 @@ public class FileDBController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
+    }
+
+    @GetMapping("/display/{id}")
+    public ResponseEntity<byte[]> displayImage(@PathVariable String id){
+        FileDB fileDB=fileDBService.getFileById(id);
+        final HttpHeaders headers=new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+
+        return new ResponseEntity<>(fileDB.getData(),headers,HttpStatus.CREATED);
     }
 
 }

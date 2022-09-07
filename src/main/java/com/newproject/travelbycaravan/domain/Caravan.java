@@ -63,7 +63,7 @@ public class Caravan   {
     @Column(length = 30, nullable = false)
     private String fuelType;
 
-    private Boolean builtIn;
+    private Boolean builtIn=false;
 
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="caravan_image",
