@@ -44,9 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().and().cors().disable().exceptionHandling()
                 .authenticationEntryPoint(authEntryPointJwt).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests().antMatchers("/travel-by-caravan/api/user/**","/travel-by-caravan/api/files/**",
-                        "/travel-by-caravan/api/caravan/**")
-                .permitAll().anyRequest().authenticated();
+                .and().authorizeRequests().antMatchers("/register", "/login","/files/display/**", "/files/download/**").permitAll()
+                .anyRequest().authenticated();
 
 
         http.csrf().and().cors().disable().exceptionHandling().authenticationEntryPoint(authEntryPointJwt)

@@ -45,16 +45,6 @@ public class FileDBController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String id){
-        FileDB fileDB=fileDBService.getFileById(id);
-
-        //Asagidaki code dosya indirmeye yarayan kalip bir code.
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename="+fileDB.getName()+"").body(fileDB.getData());
-
-    }
-
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<FileDTO>> getAllFile(){
@@ -71,6 +61,15 @@ public class FileDBController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
+    }
+    @GetMapping("/download/{id}")
+    public ResponseEntity<byte[]> getFile(@PathVariable String id){
+        FileDB fileDB=fileDBService.getFileById(id);
+
+        //Asagidaki code dosya indirmeye yarayan kalip bir code.
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename="+fileDB.getName()+"").body(fileDB.getData());
+
     }
 
     @GetMapping("/display/{id}")
