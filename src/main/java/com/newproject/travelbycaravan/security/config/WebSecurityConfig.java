@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().and().cors().disable().exceptionHandling()
                 .authenticationEntryPoint(authEntryPointJwt).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests().antMatchers("/register", "/login","/files/display/**", "/files/download/**").permitAll()
+                .and().authorizeRequests().antMatchers("/register", "/login","/files/display/**", "/files/download/**", "/caravan/visitors/all").permitAll()
                 .anyRequest().authenticated();
 
 
