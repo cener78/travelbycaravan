@@ -21,6 +21,7 @@ public class CaravanService {
     private static final String IMAGE_NOT_FOUND_MSG = "image with id %s not found";
     private final CaravanRepository caravanRepository;
     private final FileDBRepository fileDBRepository;
+    private final  static String CARAVAN_NOT_FOUND_MSG="caravan with id %d not found";
 
 
     public List<CaravanDTO> fetchAllCaravans(){
@@ -39,5 +40,30 @@ public class CaravanService {
         caravan.setImage(fileDBs);
         caravanRepository.save(caravan);
 
+    }
+
+    public CaravanDTO findById(Long id) throws ResourceNotFoundException {
+      return caravanRepository.findByIdOrderById(id)
+              .orElseThrow(()->new ResourceNotFoundException(String.format(CARAVAN_NOT_FOUND_MSG,id)));
+
+    }
+
+    public void updateCaravan(Long id, String imageId, Caravan caravan) throws BadRequestException {
+        caravan.setId(id);
+        FileDB fileDB = fileDBRepository.findById(imageId).get();
+
+        Caravan caravan1 = caravanRepository.getById(id);
+
+        if (caravan1.getBuiltIn())
+            throw new BadRequestException("You dont have permission to update car!");
+
+        caravan.setBuiltIn(false);
+
+        Set<FileDB> fileDBs = new HashSet<>();
+        fileDBs.add(fileDB);
+
+        caravan.setImage(fileDBs);
+
+        caravanRepository.save(caravan);
     }
 }

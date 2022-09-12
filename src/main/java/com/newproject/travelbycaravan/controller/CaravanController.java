@@ -25,6 +25,12 @@ public class CaravanController {
 
     public CaravanService caravanService;
 
+    @GetMapping("/visitors/{id}")
+    public ResponseEntity<CaravanDTO> getCaravanById(@PathVariable Long id){
+        CaravanDTO caravan=caravanService.findById(id);
+        return new ResponseEntity<>(caravan, HttpStatus.OK);
+    }
+
     @GetMapping("/visitors/all")
     public ResponseEntity<List<CaravanDTO>> getAllCaravan(){
         List<CaravanDTO>caravans=caravanService.fetchAllCaravans();
@@ -39,6 +45,17 @@ public class CaravanController {
         Map<String,Boolean>map=new HashMap<>();
         map.put("Caravan added successfully", true);
         return new ResponseEntity<>(map, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/admin/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Boolean>> updateCaravan(@RequestParam("id") Long id,
+                                                          @RequestParam("imageId") String imageId,
+                                                          @Valid @RequestBody Caravan caravan) {
+        caravanService.updateCaravan(id,imageId, caravan);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("success", true);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 }
