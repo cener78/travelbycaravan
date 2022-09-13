@@ -66,4 +66,15 @@ public class CaravanService {
 
         caravanRepository.save(caravan);
     }
+
+    public void removeCaravanById(Long id) throws BadRequestException{
+
+        Caravan caravan=caravanRepository.findById(id)
+                .orElseThrow(()-> new BadRequestException(String.format(CARAVAN_NOT_FOUND_MSG,id)));
+
+        if(caravan.getBuiltIn())
+            throw new BadRequestException("You do not have permission to delete the caravan");
+
+        caravanRepository.deleteById(id);
+    }
 }

@@ -58,4 +58,15 @@ public class CaravanController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @DeleteMapping("/admin/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String,Boolean>> deleteCaravan(@PathVariable Long id){
+        caravanService.removeCaravanById(id);
+
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("success", true);
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
 }
