@@ -38,7 +38,7 @@ public class CaravanController {
         return new ResponseEntity<>(caravans,HttpStatus.OK);
     }
 
-    @PostMapping("/admin/{id}/delete")
+    @PostMapping("/admin/{id}/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, Boolean>> addCaravan(@PathVariable String id,
                                                        @Valid @RequestBody Caravan caravan) {
