@@ -30,16 +30,15 @@ public class CaravanService {
 
 
     public void add(Caravan caravan, String imageId) throws BadRequestException {
-        FileDB fileDB=fileDBRepository.findById(imageId)
-                .orElseThrow(()->new ResourceNotFoundException(String.format(IMAGE_NOT_FOUND_MSG, imageId)));
+        FileDB fileDB = fileDBRepository.findById(imageId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(IMAGE_NOT_FOUND_MSG, imageId)));
 
-
-        Set<FileDB> fileDBs= new HashSet<>();
+        Set<FileDB> fileDBs = new HashSet<>();
         fileDBs.add(fileDB);
 
         caravan.setImage(fileDBs);
+        caravan.setBuiltIn(false);
         caravanRepository.save(caravan);
-
     }
 
     public CaravanDTO findById(Long id) throws ResourceNotFoundException {

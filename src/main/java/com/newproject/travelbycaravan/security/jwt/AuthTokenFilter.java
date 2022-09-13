@@ -24,6 +24,7 @@ import java.util.Optional;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
 
+
     @Autowired
     private JwtUtils jwtUtils;
 

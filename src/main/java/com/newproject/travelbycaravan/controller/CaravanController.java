@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-@RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @AllArgsConstructor
+@RestController
 @Produces(MediaType.APPLICATION_JSON)
 @RequestMapping("/caravan")
 public class CaravanController {
@@ -37,13 +38,13 @@ public class CaravanController {
         return new ResponseEntity<>(caravans,HttpStatus.OK);
     }
 
-    @PostMapping("/admin/{imageId}/add")
+    @PostMapping("/admin/{id}/delete")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String,Boolean>>addCaravan(@PathVariable String imageId, @Valid @RequestBody Caravan caravan){
-        caravanService.add(caravan,imageId);
-
-        Map<String,Boolean>map=new HashMap<>();
-        map.put("Caravan added successfully", true);
+    public ResponseEntity<Map<String, Boolean>> addCaravan(@PathVariable String id,
+                                                       @Valid @RequestBody Caravan caravan) {
+        caravanService.add(caravan, id);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("Caravan added successfully!", true);
         return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
 
@@ -58,7 +59,7 @@ public class CaravanController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @DeleteMapping("/admin/{id}/delete")
+    @DeleteMapping("/admin/{id}/auth")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String,Boolean>> deleteCaravan(@PathVariable Long id){
         caravanService.removeCaravanById(id);

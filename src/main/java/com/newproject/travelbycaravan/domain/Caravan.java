@@ -67,12 +67,12 @@ public class Caravan implements Serializable {
     @Column(nullable = false, length = 30)
     private String fuelType;
 
-    private Boolean builtIn=false;
+    private Boolean builtIn;
 
-    public Caravan(String model, Integer doors, Integer seats, Integer luggage, String transmission,
+    public Caravan(String model, Integer beds, Integer seats, Integer luggage, String transmission,
                Boolean airConditioning, Integer age, Set<FileDB> image, Double pricePerDay, String fuelType) {
         this.model = model;
-        this.beds = doors;
+        this.beds = beds;
         this.seats = seats;
         this.luggage = luggage;
         this.transmission = transmission;
