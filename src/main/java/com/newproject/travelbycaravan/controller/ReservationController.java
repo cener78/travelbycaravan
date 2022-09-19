@@ -33,7 +33,7 @@ public class ReservationController {
                                                                @Valid @RequestBody Reservation reservation){
 
         Long userId=(Long)request.getAttribute("id");
-        reservationService.addReervation(reservation,userId,caravanId);
+        reservationService.addReservation(reservation,userId,caravanId);
 
         Map<String,Boolean>map=new HashMap<>();
         map.put("Reservation added", true);
@@ -55,6 +55,30 @@ public class ReservationController {
        Long userId=(Long)request.getAttribute("id");
        ReservationDTO reservation=reservationService.findByIdAndUserId(id,userId);
        return new ResponseEntity<>(reservation,HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public  ResponseEntity<List<ReservationDTO>>getAllReservation(){
+        List<ReservationDTO>reservations=reservationService.fetchAllReservations();
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ReservationDTO>getReservationById(@PathVariable Long id){
+        ReservationDTO reservation=reservationService.findById(id);
+        return  new ResponseEntity<>(reservation,HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/auth/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<ReservationDTO>> getAllUserReservations(@RequestParam(value = "userId") Long userId){
+
+        List<ReservationDTO> reservations=reservationService.findAllByUserId(userId); // bu methodu daha once yazmistik serviste. iki yerde kullandik
+                                                                                        // ilkinde id requestenyani token dan aldik burada admin kendi girdi.
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+
     }
 
 }

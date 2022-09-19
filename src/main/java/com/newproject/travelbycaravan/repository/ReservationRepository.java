@@ -40,4 +40,9 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
    //@Query("SELECT new com.newproject.travelbycaravan.dto.ReservationDTO(r) FROM Reservation r where r.id=?1 and r.userId.id=?2 ")
    Optional<ReservationDTO> findByIdAndUserId(Long id, User user) throws ResourceNotFoundException;
+
+   //@Query("SELECT new com.newproject.travelbycaravan.dto.ReservationDTO(r) FROM Reservation r")
+   List<ReservationDTO> findAllBy();
+
+   Optional<ReservationDTO>findByIdOrderById(Long id) throws ResourceNotFoundException;
 }

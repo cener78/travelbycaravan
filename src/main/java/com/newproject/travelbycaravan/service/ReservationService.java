@@ -44,7 +44,7 @@ public class ReservationService {
     }*/
 
 
-    public void addReervation(Reservation reservation, Long userId, Caravan caravanId) throws BadRequestException {
+    public void addReservation(Reservation reservation, Long userId, Caravan caravanId) throws BadRequestException {
 
         boolean checkStatus=caravanAvailability(caravanId.getId(),reservation.getPickUpTime(),
                 reservation.getDropOffTime());
@@ -89,7 +89,7 @@ public class ReservationService {
     }
 
     public List<ReservationDTO> findAllByUserId(Long userId) {
-        User user =userRepository.findById(userId).get();
+        User user =userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException(String.format(USER_NOT_FOUND_MSG,userId)));
         return reservationRepository.findAllByUserId(user);
     }
 
@@ -98,5 +98,15 @@ public class ReservationService {
                 new ResourceNotFoundException(String.format(USER_NOT_FOUND_MSG, userId)));
         return reservationRepository.findByIdAndUserId(id,user).orElseThrow(()->
                 new ResourceNotFoundException(String.format(RESERVATION_NOT_FOUND_MSG, id)));
+    }
+
+    public List<ReservationDTO> fetchAllReservations() {
+
+        return reservationRepository.findAllBy();
+    }
+
+    public ReservationDTO findById(Long id) {
+        return reservationRepository.findByIdOrderById(id).orElseThrow(()->
+        new ResourceNotFoundException(String.format(RESERVATION_NOT_FOUND_MSG,id)));
     }
 }
