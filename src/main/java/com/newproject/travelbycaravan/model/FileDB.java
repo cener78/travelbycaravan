@@ -1,4 +1,4 @@
-package com.newproject.travelbycaravan.domain;
+package com.newproject.travelbycaravan.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

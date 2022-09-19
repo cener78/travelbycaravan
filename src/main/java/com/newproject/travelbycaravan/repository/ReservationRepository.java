@@ -1,8 +1,11 @@
 package com.newproject.travelbycaravan.repository;
 
 
-import com.newproject.travelbycaravan.domain.Reservation;
-import com.newproject.travelbycaravan.domain.enumeration.ReservationStatus;
+import com.newproject.travelbycaravan.model.Reservation;
+import com.newproject.travelbycaravan.model.User;
+import com.newproject.travelbycaravan.model.enumeration.ReservationStatus;
+import com.newproject.travelbycaravan.dto.ReservationDTO;
+import com.newproject.travelbycaravan.exception.ResourceNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -29,4 +33,11 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
                                   LocalDateTime dropOffTime,
                                   ReservationStatus done,
                                   ReservationStatus canceled);
+
+   //@Query(" SELECT new com.newproject.travelbycaravan.dto.ReservationDTO(r) From Reservation  r WHERE r.userId.id=?1")
+   List<ReservationDTO>findAllByUserId(User userId);
+
+
+   //@Query("SELECT new com.newproject.travelbycaravan.dto.ReservationDTO(r) FROM Reservation r where r.id=?1 and r.userId.id=?2 ")
+   Optional<ReservationDTO> findByIdAndUserId(Long id, User user) throws ResourceNotFoundException;
 }

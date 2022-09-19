@@ -1,7 +1,7 @@
 package com.newproject.travelbycaravan.repository;
 
-import com.newproject.travelbycaravan.domain.Role;
-import com.newproject.travelbycaravan.domain.enumeration.UserRole;
+import com.newproject.travelbycaravan.model.Role;
+import com.newproject.travelbycaravan.model.enumeration.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

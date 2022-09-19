@@ -1,6 +1,6 @@
 package com.newproject.travelbycaravan.security.service;
 
-import com.newproject.travelbycaravan.domain.User;
+import com.newproject.travelbycaravan.model.User;
 import com.newproject.travelbycaravan.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

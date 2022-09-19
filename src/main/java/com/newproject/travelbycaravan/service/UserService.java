@@ -1,8 +1,8 @@
 package com.newproject.travelbycaravan.service;
 
-import com.newproject.travelbycaravan.domain.Role;
-import com.newproject.travelbycaravan.domain.User;
-import com.newproject.travelbycaravan.domain.enumeration.UserRole;
+import com.newproject.travelbycaravan.model.Role;
+import com.newproject.travelbycaravan.model.User;
+import com.newproject.travelbycaravan.model.enumeration.UserRole;
 import com.newproject.travelbycaravan.dto.AdminDTO;
 import com.newproject.travelbycaravan.dto.UserDTO;
 import com.newproject.travelbycaravan.exception.AuthException;
@@ -14,7 +14,6 @@ import com.newproject.travelbycaravan.repository.RoleRepository;
 import com.newproject.travelbycaravan.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

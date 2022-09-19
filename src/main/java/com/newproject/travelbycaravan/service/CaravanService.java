@@ -1,7 +1,7 @@
 package com.newproject.travelbycaravan.service;
 
-import com.newproject.travelbycaravan.domain.Caravan;
-import com.newproject.travelbycaravan.domain.FileDB;
+import com.newproject.travelbycaravan.model.Caravan;
+import com.newproject.travelbycaravan.model.FileDB;
 import com.newproject.travelbycaravan.dto.CaravanDTO;
 import com.newproject.travelbycaravan.exception.BadRequestException;
 import com.newproject.travelbycaravan.exception.ResourceNotFoundException;

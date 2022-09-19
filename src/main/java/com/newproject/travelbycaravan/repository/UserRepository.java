@@ -1,7 +1,7 @@
 package com.newproject.travelbycaravan.repository;
 
 
-import com.newproject.travelbycaravan.domain.User;
+import com.newproject.travelbycaravan.model.User;
 import com.newproject.travelbycaravan.exception.BadRequestException;
 import com.newproject.travelbycaravan.exception.ResourceNotFoundException;
 import com.newproject.travelbycaravan.projection.ProjectUser;

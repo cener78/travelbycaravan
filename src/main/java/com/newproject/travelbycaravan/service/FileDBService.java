@@ -1,7 +1,7 @@
 package com.newproject.travelbycaravan.service;
 
 
-import com.newproject.travelbycaravan.domain.FileDB;
+import com.newproject.travelbycaravan.model.FileDB;
 import com.newproject.travelbycaravan.exception.ResourceNotFoundException;
 import com.newproject.travelbycaravan.repository.FileDBRepository;
 import lombok.AllArgsConstructor;

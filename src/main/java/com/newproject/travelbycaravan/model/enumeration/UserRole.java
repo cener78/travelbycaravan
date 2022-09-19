@@ -1,4 +1,4 @@
-package com.newproject.travelbycaravan.domain.enumeration;
+package com.newproject.travelbycaravan.model.enumeration;
 
 public enum UserRole {
     ROLE_CUSTOMER,

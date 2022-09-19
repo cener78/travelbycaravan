@@ -1,8 +1,8 @@
-package com.newproject.travelbycaravan.domain;
+package com.newproject.travelbycaravan.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.newproject.travelbycaravan.domain.enumeration.ReservationStatus;
+import com.newproject.travelbycaravan.model.enumeration.ReservationStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

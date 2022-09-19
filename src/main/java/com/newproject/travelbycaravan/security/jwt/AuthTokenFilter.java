@@ -1,6 +1,6 @@
 package com.newproject.travelbycaravan.security.jwt;
 
-import com.newproject.travelbycaravan.domain.User;
+import com.newproject.travelbycaravan.model.User;
 import com.newproject.travelbycaravan.repository.UserRepository;
 import com.newproject.travelbycaravan.security.service.UserDetailsServiceImpl;
 

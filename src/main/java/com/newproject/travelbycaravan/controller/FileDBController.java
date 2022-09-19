@@ -1,7 +1,7 @@
 package com.newproject.travelbycaravan.controller;
 
 
-import com.newproject.travelbycaravan.domain.FileDB;
+import com.newproject.travelbycaravan.model.FileDB;
 import com.newproject.travelbycaravan.dto.FileDTO;
 import com.newproject.travelbycaravan.service.FileDBService;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

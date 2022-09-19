@@ -1,14 +1,13 @@
 package com.newproject.travelbycaravan.controller;
 
 
-import com.newproject.travelbycaravan.domain.User;
+import com.newproject.travelbycaravan.model.User;
 import com.newproject.travelbycaravan.dto.AdminDTO;
 import com.newproject.travelbycaravan.dto.UserDTO;
 import com.newproject.travelbycaravan.projection.ProjectUser;
 import com.newproject.travelbycaravan.security.jwt.JwtUtils;
 import com.newproject.travelbycaravan.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

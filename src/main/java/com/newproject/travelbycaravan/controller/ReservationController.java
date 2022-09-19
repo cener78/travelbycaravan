@@ -1,7 +1,8 @@
 package com.newproject.travelbycaravan.controller;
 
-import com.newproject.travelbycaravan.domain.Caravan;
-import com.newproject.travelbycaravan.domain.Reservation;
+import com.newproject.travelbycaravan.model.Caravan;
+import com.newproject.travelbycaravan.model.Reservation;
+import com.newproject.travelbycaravan.dto.ReservationDTO;
 import com.newproject.travelbycaravan.service.ReservationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -37,6 +39,22 @@ public class ReservationController {
         map.put("Reservation added", true);
         return new ResponseEntity<>(map,HttpStatus.CREATED);
 
+    }
+
+    @GetMapping("/auth/all")
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
+    public ResponseEntity<List<ReservationDTO>> getUserReservationsById(HttpServletRequest request){
+        Long userId = (Long) request.getAttribute("id");
+        List<ReservationDTO> reservation = reservationService.findAllByUserId(userId);
+        return new ResponseEntity<>(reservation, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/auth")
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
+    public ResponseEntity<ReservationDTO>getUserReservationById(@PathVariable Long id, HttpServletRequest request){
+       Long userId=(Long)request.getAttribute("id");
+       ReservationDTO reservation=reservationService.findByIdAndUserId(id,userId);
+       return new ResponseEntity<>(reservation,HttpStatus.OK);
     }
 
 }

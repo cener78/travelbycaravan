@@ -1,7 +1,7 @@
-package com.newproject.travelbycaravan.domain;
+package com.newproject.travelbycaravan.model;
 
 
-import com.newproject.travelbycaravan.domain.enumeration.UserRole;
+import com.newproject.travelbycaravan.model.enumeration.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

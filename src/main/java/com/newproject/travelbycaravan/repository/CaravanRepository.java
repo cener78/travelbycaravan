@@ -1,6 +1,6 @@
 package com.newproject.travelbycaravan.repository;
 
-import com.newproject.travelbycaravan.domain.Caravan;
+import com.newproject.travelbycaravan.model.Caravan;
 import com.newproject.travelbycaravan.dto.CaravanDTO;
 import com.newproject.travelbycaravan.exception.ResourceNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;

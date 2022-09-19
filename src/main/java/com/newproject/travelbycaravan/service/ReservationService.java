@@ -1,17 +1,17 @@
 package com.newproject.travelbycaravan.service;
 
 
-import com.newproject.travelbycaravan.domain.Caravan;
-import com.newproject.travelbycaravan.domain.Reservation;
-import com.newproject.travelbycaravan.domain.User;
-import com.newproject.travelbycaravan.domain.enumeration.ReservationStatus;
+import com.newproject.travelbycaravan.model.Caravan;
+import com.newproject.travelbycaravan.model.Reservation;
+import com.newproject.travelbycaravan.model.User;
+import com.newproject.travelbycaravan.model.enumeration.ReservationStatus;
+import com.newproject.travelbycaravan.dto.ReservationDTO;
 import com.newproject.travelbycaravan.exception.BadRequestException;
 import com.newproject.travelbycaravan.exception.ResourceNotFoundException;
 import com.newproject.travelbycaravan.repository.CaravanRepository;
 import com.newproject.travelbycaravan.repository.ReservationRepository;
 import com.newproject.travelbycaravan.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +25,7 @@ import java.util.List;
 public class ReservationService {
 
 
+
     //@Autowired Kullanirsak final olmaz
     private final ReservationRepository reservationRepository;
 
@@ -35,6 +36,8 @@ public class ReservationService {
     private final static String USER_NOT_FOUND_MSG="User with Id %d not found";
 
     private final static String CARAVAN_NOT_FOUND_MSG="Caravan with Id %d not found";
+
+    private static final String RESERVATION_NOT_FOUND_MSG = "Reservation with id %d not found";
 
    /* public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
@@ -85,4 +88,15 @@ public class ReservationService {
         return checkStatus.size()>0;
     }
 
+    public List<ReservationDTO> findAllByUserId(Long userId) {
+        User user =userRepository.findById(userId).get();
+        return reservationRepository.findAllByUserId(user);
+    }
+
+    public ReservationDTO findByIdAndUserId(Long id, Long userId) {
+        User user=userRepository.findById(userId).orElseThrow(()->
+                new ResourceNotFoundException(String.format(USER_NOT_FOUND_MSG, userId)));
+        return reservationRepository.findByIdAndUserId(id,user).orElseThrow(()->
+                new ResourceNotFoundException(String.format(RESERVATION_NOT_FOUND_MSG, id)));
+    }
 }

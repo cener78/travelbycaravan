@@ -1,7 +1,7 @@
 package com.newproject.travelbycaravan.controller;
 
 
-import com.newproject.travelbycaravan.domain.Caravan;
+import com.newproject.travelbycaravan.model.Caravan;
 import com.newproject.travelbycaravan.dto.CaravanDTO;
 import com.newproject.travelbycaravan.service.CaravanService;
 import lombok.AllArgsConstructor;
