@@ -109,4 +109,31 @@ public class ReservationService {
         return reservationRepository.findByIdOrderById(id).orElseThrow(()->
         new ResourceNotFoundException(String.format(RESERVATION_NOT_FOUND_MSG,id)));
     }
+
+    public void updateReservation(Caravan caravanId, Long reservationId, Reservation reservation) throws BadRequestException {
+        boolean checkStatus=caravanAvailability(caravanId.getId(),reservation.getPickUpTime(),reservation.getDropOffTime());
+
+        Reservation reservationExist=reservationRepository.findById(reservationId).orElseThrow(()->
+                new ResourceNotFoundException(String.format(RESERVATION_NOT_FOUND_MSG,reservationId)));
+            if(reservation.getPickUpTime().compareTo(reservationExist.getPickUpTime())==0&&
+            reservation.getDropOffTime().compareTo(reservationExist.getDropOffTime())==0&&
+            caravanId.getId().equals(reservationExist.getCaravanId().getId())){
+
+                reservationExist.setStatus(reservation.getStatus());
+
+            }else if(checkStatus)
+                throw new BadRequestException("Caravan is already reserved, please select another");
+
+            Double totalPrice=totalPrice(reservation.getPickUpTime(),reservation.getDropOffTime(),caravanId.getId());
+
+            reservationExist.setTotalPrice(totalPrice);
+            reservationExist.setCaravanId(caravanId);
+            reservationExist.setPickUpTime(reservation.getPickUpTime());
+            reservationExist.setDropOffTime(reservation.getDropOffTime());
+            reservationExist.setPickUpLocation(reservation.getPickUpLocation());
+            reservationExist.setDropOffLocation(reservation.getDropOffLocation());
+
+            reservationRepository.save(reservationExist);
+
+    }
 }

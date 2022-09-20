@@ -41,6 +41,18 @@ public class ReservationController {
 
     }
 
+    @PostMapping("add/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String,Boolean>> addReservation(@RequestParam(value = "userId") Long userId,
+                                                              @RequestParam(value = "caravanId") Caravan caravanId,
+                                                              @Valid @RequestBody Reservation reservation){
+
+        reservationService.addReservation(reservation,userId,caravanId);
+        Map<String,Boolean>map=new HashMap<>();
+        map.put("Reservation added successfully",true);
+        return new ResponseEntity<>(map,HttpStatus.CREATED);
+    }
+
     @GetMapping("/auth/all")
     @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
     public ResponseEntity<List<ReservationDTO>> getUserReservationsById(HttpServletRequest request){
@@ -80,5 +92,20 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
 
     }
+
+    @PutMapping("/admin/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String,Boolean>> updateReservation(@RequestParam(value = "caravanId") Caravan caravanId,
+                                                               @RequestParam(value = "reservationId")Long reservationId,
+                                                               @Valid @RequestBody Reservation reservation){
+
+        reservationService.updateReservation(caravanId,reservationId,reservation);
+
+        Map<String,Boolean>map=new HashMap<>();
+        map.put("Reservation is updated successfully",true);
+        return new ResponseEntity<>(map,HttpStatus.OK);
+
+    }
+
 
 }
