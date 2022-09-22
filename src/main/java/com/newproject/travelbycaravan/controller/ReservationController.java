@@ -5,6 +5,7 @@ import com.newproject.travelbycaravan.model.Reservation;
 import com.newproject.travelbycaravan.dto.ReservationDTO;
 import com.newproject.travelbycaravan.service.ReservationService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +108,41 @@ public class ReservationController {
         return new ResponseEntity<>(map,HttpStatus.OK);
 
     }
+
+    @DeleteMapping("/admin/{id}/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String,Boolean>> deleteReservation(@PathVariable Long id){
+        reservationService.romoveById(id);
+
+        Map<String, Boolean>map= new HashMap<>();
+        map.put("Reservation removed",true);
+        return new ResponseEntity<>(map,HttpStatus.OK);
+
+    }
+
+    @GetMapping("/auth")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
+    public ResponseEntity<Map<String,Object>> checkCaravanAvailability(@RequestParam(value = "caravanId") Long caravanId,
+                                                                       @RequestParam(value = "pickUpDateTime")
+                                                                       @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+                                                                       LocalDateTime pickUpTime,
+                                                                       @RequestParam(value = "dropOffDateTime")
+                                                                       @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+                                                                       LocalDateTime dropOffTime){
+
+
+
+      boolean availability= reservationService.caravanAvailability(caravanId,pickUpTime,dropOffTime);
+
+      Double totalPrice=reservationService.totalPrice(pickUpTime,dropOffTime,caravanId);
+
+      Map<String,Object>map=new HashMap<>();
+      map.put("isAvailable", !availability);
+      map.put("totalPrice",totalPrice);
+      return new ResponseEntity<>(map,HttpStatus.OK);
+
+    }
+
 
 
 }

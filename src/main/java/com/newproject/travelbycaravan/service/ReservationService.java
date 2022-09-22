@@ -68,7 +68,7 @@ public class ReservationService {
 
    }
 
-    private Double totalPrice(LocalDateTime pickUpTime, LocalDateTime dropOffTime, Long caravanId) {
+    public Double totalPrice(LocalDateTime pickUpTime, LocalDateTime dropOffTime, Long caravanId) {
        Caravan caravan=caravanRepository.findById(caravanId).orElseThrow(()->
                new ResourceNotFoundException(String.format(CARAVAN_NOT_FOUND_MSG,caravanId)));
       Long hours =(new Reservation()).getTotalHours(pickUpTime,dropOffTime);
@@ -81,7 +81,7 @@ public class ReservationService {
 
     }
 
-    private boolean caravanAvailability(Long caravanId, LocalDateTime pickUpTime, LocalDateTime dropOffTime) {
+    public boolean caravanAvailability(Long caravanId, LocalDateTime pickUpTime, LocalDateTime dropOffTime) {
         List<Reservation> checkStatus=reservationRepository.checkStatus(caravanId,pickUpTime,dropOffTime,
                 ReservationStatus.DONE,ReservationStatus.CANCELED);
 
@@ -134,6 +134,21 @@ public class ReservationService {
             reservationExist.setDropOffLocation(reservation.getDropOffLocation());
 
             reservationRepository.save(reservationExist);
+
+    }
+
+    public void romoveById(Long id) {
+
+        boolean reservationExist=reservationRepository.existsById(id);
+
+        if(!reservationExist)
+            throw new ResourceNotFoundException("Reservation does not exist");
+
+
+            reservationRepository.deleteById(id);
+
+
+
 
     }
 }
