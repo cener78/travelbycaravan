@@ -19,7 +19,7 @@ public class ExcelService {
     CaravanRepository caravanRepository;
     ReservationRepository reservationRepository;
 
-    public ByteArrayInputStream loadUse() throws IOException {
+    public ByteArrayInputStream loadUser() throws IOException {
        List<User> users=userRepository.findAll();
 
        return Excel.usersExel(users);
