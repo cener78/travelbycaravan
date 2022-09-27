@@ -25,9 +25,13 @@ public class CorsConfig {
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("PATCH");
+
         config.addAllowedOrigin("*");
+
         config.addAllowedHeader("*");
         source.registerCorsConfiguration("/**",config);
+
+        registrationBean.setFilter(new CorsFilter(source));
         registrationBean.setOrder(0);
         return  registrationBean;
 

@@ -15,24 +15,21 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SpringFoxConfig {
 
     @Bean
-
-    public Docket api(){
-        return  new Docket(DocumentationType.SWAGGER_2)
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build().apiInfo(metaData());
-
-
     }
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
-                .title("TravelByCaravan Swagger Documentation")
-                .description("********")
-                .version("1.1.0").build();
-
+                .title("Travel By Caravan Swagger Documentation")
+                .description("******")
+                .version("1.1.0")
+                .build();
     }
 
-    //http://localhost:8080/travelByCaravan/api/swagger-ui.html#/
+    //http://localhost:8080/travel-by-caravan/api/swagger-ui.html#/
 }
