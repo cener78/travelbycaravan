@@ -11,13 +11,15 @@ spring:
     url: jdbc:mysql://localhost:3306/travelbycaravandb
     username: root
     password: 2672li
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
+    ##driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect:org.hibernate.dialect.PostgreSQLDialect
+       # dialect: org.hibernate.dialect.MySQL5Dialect
         format_sql: true
         jdbc:
           lob:
