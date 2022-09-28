@@ -8,9 +8,12 @@ server:
     context-path: /travel-by-caravan/api
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/travelbycaravandb
-    username: root
-    password: 2672li
+    url: jdbc:postgresql://localhost:5432/travelbycaravandb
+    #url: jdbc:mysql://localhost:3306/travelbycaravandb
+    username: techprodb_user
+    #username: root
+    password: password
+    #password: 2672li
     driver-class-name: org.postgresql.Driver
     ##driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
